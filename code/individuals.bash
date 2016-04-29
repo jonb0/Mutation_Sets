@@ -1,5 +1,4 @@
 #!/bin/bash   
-
 # To use:
 # ./individuals.bash -c N
 # 
@@ -41,18 +40,14 @@ dir='../data/'$dataset'/'
 mkdir $dir
 
 ### step 0
-oldfile='ALL.chr'$c'.phase3_shapeit2_mvncall_integrated_v5a.'$dataset'.genotypes.vcf.gz'
-echo 'fetching file from '$oldfile
-wget -P $dir $dataloc$oldfile
 newfile=$dir'ALL.chr'$c'.individuals.vcf.gz'
-echo 'moving '$dir$oldfile' to '$newfile
-mv $dir$oldfile $newfile
 
 ### step 1
 echo 'unzipping '$newfile
 time gunzip $newfile
-unzipped=${newfile::-3}
-
+unzipped=${newfile%.*z}
+echo 'rosa1', $unzipped
+awk 'NR == 253  {print; exit}' $unzipped > columns.txt
 
 ### step 2
 
@@ -62,32 +57,36 @@ ndir=$dir'chr'$c'n/'
 mkdir $pdir
 mkdir $ndir
 
+echo 'rosa2'
 
 ### step 3
 step=100
 for j in {0..24}
 do
 	start=$(($j*$step + 10))
-	finish=$(((($j + 1))*$step + 9))
+        finish=$(((($j + 1))*$step + 9))
 	echo 'reading individuals '$start'-'$finish' from '$unzipped
-	time grep -ve "#" $unzipped | awk -v c=$c -v start=$start -v finish=$finish -v dir=$dir '{for(i=start;i<=finish;i++) {name=dir"chr"c"p/chr"c".p"i-9;print $i> name}}'
+	time grep -ve "#" $unzipped | awk -v c=$c -v start=$start -v finish=$finish -v dir=$dir '{for(i=start;i<=finish;i++) {name=dir"chr"c"p/chr"c".p"i-9;print $i"	"$3 > name}}'
 done
 echo 'reading individuals 2510 - 2513 from '$unzipped
-time grep -ve "#" $unzipped | awk -v c=$c -v dir=$dir '{for(i=2510;i<=2513;i++) {name=dir"chr"c"p/chr"c".p"i-9;print $i> name}}'
+time grep -ve "#" $unzipped | awk -v c=$c -v dir=$dir '{for(i=2510;i<=2513;i++) {name=dir"chr"c"p/chr"c".p"i-9;print $i"   "$3 > name}}'
 
 
 
-### step 4
+#### step 4
+columfile='columns.txt.'$c
 time for i in {1..2504}
 do
 	col=$(($i + 9))
-	name=$(cut -f $col columns.txt)
+	name=$(cut -f $col $columfile)
 	oldfile=$pdir'chr'$c'.p'$i
 	newfile=$ndir'chr'$c'.'$name
 	echo 'moving '$oldfile' to '$newfile
-	time cat $oldfile | awk -F "|" '$1>=1 && $2>=1 {print NR}' > $newfile
-	rm $oldfile
+	time cat $oldfile | awk -F "|" '$1>=1 && $2>=1 {print $2}' > tmp.file.$c
+  	time cat tmp.file.$c | awk '{print $NF}' > $newfile
+	#rm $oldfile
 done
 
+rm tmp.file.$c
 ### step 5
 rm $unzipped
