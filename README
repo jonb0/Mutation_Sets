@@ -31,6 +31,17 @@ population, with ALL including all of them.
 
 columns.txt with all the indivuals ids.
 
+Important information:
+
+1. Two directories needs to be created:
+	- data
+	- code
+2. Inside data, directory 20130502 needs to be created:
+	- data/20130502
+
+3. All the scripts explained bellow need to be stored in the code directory
+ 
+4. column.txt needs to be stored in data and code directories
 _________________________
 Step 1:
 
