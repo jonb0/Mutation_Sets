@@ -41,7 +41,7 @@ Important information:
 
 3. All the scripts explained bellow need to be stored in the code directory
  
-4. column.txt needs to be stored in data and code directories
+4. columns.txt needs to be stored in data and code directories
 _________________________
 Step 1:
 
@@ -65,8 +65,6 @@ e.g. python pair_overlap_mutations.py -c 1 -pop 6
 Step 6: 
 python frequency_overlap_mutations.py -c <Chromosome> -pop <POP: 0:ALL, 1:AFR, 2:AMR, 3:EAS, 4:EUR, 5:SAS, 6:GBR> 
 e.g. python frequency_overlap_mutations.py -c 1 -pop 6
-
-
 _________________________
 download_individuals.bash
 ---
@@ -75,8 +73,6 @@ To use:
 
 download_individuals.bash downloads comprossed files from 1000 geneome (Phase3)
 by chromosome.
-
-
 _________________________
 individuals.bash
 ---
@@ -144,6 +140,7 @@ reduce any signal from accidental pairings between family members.
 
 These results are then plotted as a histogram of the number of pairs (y-axis) 
 and the pairs are also output as text files named.
+
 _________________________
 frequency_overlap_mutations.py
 ---
