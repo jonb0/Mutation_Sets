@@ -135,12 +135,15 @@ b) modifying the number of variants:
 	b.1) only the variants with a score less than 0.05 
 	b.2) all the variants.
 
-This analysis is run 100 times to 
-reduce any signal from accidental pairings between family members.
+This analysis is run 100 times to reduce any signal 
+from accidental pairings between family members.
 
 These results are then plotted as a histogram of the number of pairs (y-axis) 
 and the pairs are also output as text files named.
 
+Note: This script works with the SNPs variations (rs numbers),
+and not with the gens ids (ENSEMBL), since we are interested to
+measure the overlapping of mutations (variations) of the genes.
 _________________________
 frequency_overlap_mutations.py
 ---
@@ -148,7 +151,11 @@ To use:
 python frequency_overlap_mutations.py -c <Number Chromosome> -pop POP
 
 The script asks measures the frequency of overlappings in mutations 
-by selecting a number of random individuals and selecting all variants without taking into account their SIFT scores. 
-This analysis has been repeated 100 times. 
+by selecting a number of random individuals and selecting all variants without 
+taking into account their SIFT scores.This analysis has been repeated 100 times. 
+
+Note: This script works with the SNPs variations (rs numbers),
+and not with the gens ids (ENSEMBL), since we are interested to
+measure the frequency in mutations (varaiations) of the genes.
 
 ---
