@@ -43,8 +43,8 @@ pops = ('ALL', 'EUR', 'EAS', 'AFR', 'AMR', 'SAS', 'GBR')
 siftfile = '../data/' + sift_dataset + '/sifted.SIFT.chr' + str(c) + '.txt'
 data_dir = '../data/' + dataset + '/'
 pop_dir = '../populations/'
-outdata_dir = '../approach_10/output_no_sift/'
-plot_dir = '../approach_10/plots_no_sift/'
+outdata_dir = '../analysis_2/output_no_sift/'
+plot_dir = '../analysis_2/plots_no_sift/'
 OutputFormat = '.png'
 
 POP = pops[args.pop]
