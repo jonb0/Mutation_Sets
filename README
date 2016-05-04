@@ -33,11 +33,17 @@ columns.txt with all the indivuals ids.
 
 Important information:
 
-1. Two directories needs to be created:
+1. Four directories needs to be created:
 	- data
 	- code
-2. Inside data, directory 20130502 needs to be created:
+	- analysis_1
+	- analysis_2
+2. Inside 'data' directory, the '20130502' directory needs to be created:
 	- data/20130502
+
+3. Inside 'analysis_1' and 'analysis_2' directories, 'output_no_sift' and 'plots_no_sift' directories needs to be created:
+	- analysis_1/output_no_sift  analysis_1/plots_no_sift
+	- analysis_2/output_no_sift  analysis_2/plots_no_sift
 
 3. All the scripts explained bellow need to be stored in the code directory
  
@@ -141,9 +147,27 @@ from accidental pairings between family members.
 These results are then plotted as a histogram of the number of pairs (y-axis) 
 and the pairs are also output as text files named.
 
+As an output, this script generates:
+a) Text files (stored in the 'analysis_1/output_no_sift' directory)
+	a.1)individual_half_pairs_overlap_chr<NumChromosome>_s<SIFT_Level>_<POP>.txt
+	a.2)total_individual_pairs_overlap_chr<NumChromosome>_s<SIFT_Level>_<POP>.txt
+	a.3)100_individual_overlap_chr<NumChromosome>_s<SIFT_Level>_<POP>.txt
+	a.4)random_mutations_individual<NumChromosome>_s<SIFT_Level>_<POP>_run_<NumRun>.txt
+ 
+b) Plot figures (stored in the 'analysis_1/plots_no_sift' directory)
+	b.1)half_distribution_c<NumChromosome>_s<SIFT_Level>_<POP>.png
+	b.2)total_distribution_c<NumChromosome>_s<SIFT_Level>_<POP>.png
+	b.3)100_distribution_c<NumChromosome>_s<SIFT_Level>_<POP>.png
+	b.4)colormap_distribution_c<NumChromosome>_s<SIFT_Level>_<POP>.png
+
+c) Another interesting files stored 'analysis_1/output_no_sift' directory
+	c.1) map_variations<NumChromosome>_s<SIFT_Level>_<POP>.txt
+	c.2) mutation_index_array<NumChromosome>_s<SIFT_Level>_<POP>.txt
+
 Note: This script works with the SNPs variations (rs numbers),
 and not with the gens ids (ENSEMBL), since we are interested to
 measure the overlapping of mutations (variations) of the genes.
+
 _________________________
 frequency_overlap_mutations.py
 ---
@@ -153,6 +177,18 @@ python frequency_overlap_mutations.py -c <Number Chromosome> -pop POP
 The script asks measures the frequency of overlappings in mutations 
 by selecting a number of random individuals and selecting all variants without 
 taking into account their SIFT scores.This analysis has been repeated 100 times. 
+
+As an output, this script generates:
+a) Text files (stored in the 'analysis_2/output_no_sift' directory)
+	a.1)Histogram_mutation_overlap_chr<NumChromosome>_s<SIFT_Level>_<POP>_<NumRun>.txt
+
+b) Plot figures (stored in the 'analysis_2/plots_no_sift' directory)
+	b.1)Frequency_mutations<NumChromosome>_s<SIFT_Level>_<POP><NumRun>.png
+
+c) Another interesting files stored in 'analysis_2/output_no_sift' directory
+	c.1)map_variations<NumChromosome>_s<SIFT_Level>_<POP>.txt
+	c.2)mutation_index_array<NumChromosome>_s<SIFT_Level>_<POP>.txt
+	c.3)Mutation_overlap_chr<NumChromosome>_s<SIFT_Level>_<POP>_<NumRun>.txt
 
 Note: This script works with the SNPs variations (rs numbers),
 and not with the gens ids (ENSEMBL), since we are interested to
