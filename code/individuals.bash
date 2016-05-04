@@ -46,7 +46,7 @@ newfile=$dir'ALL.chr'$c'.individuals.vcf.gz'
 echo 'unzipping '$newfile
 time gunzip $newfile
 unzipped=${newfile%.*z}
-echo 'rosa1', $unzipped
+echo 'unzipped file', $unzipped
 awk 'NR == 253  {print; exit}' $unzipped > columns.txt
 
 ### step 2
