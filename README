@@ -176,7 +176,11 @@ python frequency_overlap_mutations.py -c <Number Chromosome> -pop POP
 
 The script asks measures the frequency of overlappings in mutations 
 by selecting a number of random individuals and selecting all variants without 
-taking into account their SIFT scores.This analysis has been repeated 100 times. 
+taking into account their SIFT scores. For example, if variant 1, variant 20, 
+variant 42, and variant 80 are the only variants which presents 
+3 overlappings among individuals, we could say that the frequency of 3 overlappings
+among that  group of individuals is 4 mutations. 
+This analysis has been repeated 100 times. 
 
 As an output, this script generates:
 a) Text files (stored in the 'analysis_2/output_no_sift' directory)
