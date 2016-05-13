@@ -74,7 +74,7 @@ time grep -ve "#" $unzipped | awk -v c=$c -v dir=$dir '{for(i=2510;i<=2513;i++) 
 
 
 #### step 4
-columfile='columns.txt.'$c
+columfile='columns.txt'
 time for i in {1..2504}
 do
 	col=$(($i + 9))
@@ -84,7 +84,7 @@ do
 	echo 'moving '$oldfile' to '$newfile
 	time cat $oldfile | awk -F "|" '$1>=1 && $2>=1 {print $2}' > tmp.file.$c
   	time cat tmp.file.$c | awk '{print $NF}' > $newfile
-	#rm $oldfile
+	rm $oldfile
 done
 
 rm tmp.file.$c
