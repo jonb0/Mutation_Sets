@@ -18,7 +18,7 @@ done
 
 dataset='20130502'
 echo 'now processing chromosome '$c
-dataloc='ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/release/'$dataset'/'
+dataloc='ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/'$dataset'/'
 dir='../data/'$dataset'/'
 
 mkdir $dir
