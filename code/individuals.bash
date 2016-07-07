@@ -34,7 +34,6 @@ done
 
 dataset='20130502'
 echo 'now processing chromosome '$c
-dataloc='ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/release/'$dataset'/'
 dir='../data/'$dataset'/'
 
 mkdir $dir
@@ -57,36 +56,40 @@ ndir=$dir'chr'$c'n/'
 mkdir $pdir
 mkdir $ndir
 
-echo 'rosa2'
 
 ### step 3
 step=100
 for j in {0..24}
 do
-	start=$(($j*$step + 10))
+        start=$(($j*$step + 10))
         finish=$(((($j + 1))*$step + 9))
-	echo 'reading individuals '$start'-'$finish' from '$unzipped
-	time grep -ve "#" $unzipped | awk -v c=$c -v start=$start -v finish=$finish -v dir=$dir '{for(i=start;i<=finish;i++) {name=dir"chr"c"p/chr"c".p"i-9;print $i"	"$3 > name}}'
+        echo 'reading individuals '$start'-'$finish' from '$unzipped
+        time grep -ve "#" $unzipped | awk -v c=$c -v start=$start -v finish=$finish -v dir=$dir '{for(i=start;i<=finish;i++) {name=dir"chr"c"p/chr"c".p"i-9;print $i"   "$2"    "$3"    "$4"    "$5"    "$8 > name}}'
 done
 echo 'reading individuals 2510 - 2513 from '$unzipped
-time grep -ve "#" $unzipped | awk -v c=$c -v dir=$dir '{for(i=2510;i<=2513;i++) {name=dir"chr"c"p/chr"c".p"i-9;print $i"   "$3 > name}}'
+time grep -ve "#" $unzipped | awk -v c=$c -v dir=$dir '{for(i=2510;i<=2513;i++) {name=dir"chr"c"p/chr"c".p"i-9;print $i"   "$2"    "$3"    "$4"    "$5"    "$8 > name}}'
 
 
 
-#### step 4
-columfile='columns.txt'
+##### step 4
+columfile='columns.txt.'$c
 time for i in {1..2504}
 do
-	col=$(($i + 9))
-	name=$(cut -f $col $columfile)
-	oldfile=$pdir'chr'$c'.p'$i
-	newfile=$ndir'chr'$c'.'$name
-	echo 'moving '$oldfile' to '$newfile
-	time cat $oldfile | awk -F "|" '$1>=1 && $2>=1 {print $2}' > tmp.file.$c
-  	time cat tmp.file.$c | awk '{print $NF}' > $newfile
-	rm $oldfile
+        col=$(($i + 9))
+        name=$(cut -f $col $columfile)
+        oldfile=$pdir'chr'$c'.p'$i
+        newfile=$ndir'chr'$c'.'$name
+        echo 'moving '$oldfile' to '$newfile
+        time cat $oldfile| awk '{print $6}' | awk -F ";" '{print $9}'| awk -F"=" '{print $2}' > AF_value.$c
+        paste $oldfile AF_value.$c | awk '{$6=""; print}'> tmp.file.$c
+        time cat tmp.file.$c | awk ' $6 >= 0.5 {print $0}'| awk -F "|" '$1==0 || $2==0 {print $2}' > tmp.select.$c
+        time cat tmp.file.$c | awk ' $6 < 0.5 {print $0}'| awk -F "|" '$1==1 || $2==1 {print $2}' >> tmp.select.$c
+        time cat tmp.select.$c | awk '{print $2"        "$3"    "$4"    "$5"    "$6}' > $newfile
+        rm $oldfile
 done
 
 rm tmp.file.$c
+rm tmp.select.$c
+rm AF_value.$c
 ### step 5
 rm $unzipped
