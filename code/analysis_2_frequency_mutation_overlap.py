@@ -17,7 +17,8 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 import itertools
 import argparse
 from pylab import pcolor, show, colorbar, xticks, yticks
-from matplotlib import mpl,pyplot
+import matplotlib as mpl
+import matplotlib.pyplot as plt
 
 c_help = 'type a chromosome 1-22'
 pop_help = 'type a population 0-5; 0:ALL, 1:EUR, 2:EAS, 3:AFR, 4:AMR, 5:SAS, 6:GBR'
